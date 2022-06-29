@@ -28,6 +28,7 @@
   "dependencies": {
     "@prisma/client": "^4.0.0",
     "awilix": "^7.0.3",
+    "carbone": "^3.2.3",
     "next": "^12.2.0",
     "next-compose-plugins": "^2.2.1",
     "next-connect": "^0.12.2",
