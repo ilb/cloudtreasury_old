@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// Универсальный справочник
+model Dictionary {
+  ///Идентификатор
+  id           Int             @id @default(autoincrement())
+  ///Дата создания
+  createdAt    DateTime        @default(now())
+  ///Дата модификации
+  updatedAt    DateTime?       @updatedAt
+  ///Код
+  code         String?         @db.VarChar(100)
+  ///Наименование
+  name         String?         @db.VarChar(255)
+  /// Дата начала действия записи
+  begDate      DateTime?       @db.Date
+  ///Дата закрытия записи
+  endDate      DateTime?       @db.Date
+  ///Код родителя
+  parentId     Int?
+  ///Родитель
+  parent       Dictionary?     @relation("dictionaryParent", fields: [parentId], references: [id])
+  //Дочерние справочники
+  dictionaries Dictionary[]    @relation("dictionaryParent")
+  // Значения справочника
+  rows         DictionaryRow[]
+
+  @@unique([parentId, code, name], name: "Dictionary_parentId_code_name_unique")
+}
+
+/// Универсальный справочник - строка данных
+model DictionaryRow {
+  ///Идентификатор
+  id           Int         @id @default(autoincrement())
+  ///Дата акутальности данных
+  date         DateTime?   @db.Date
+  //Данные
+  data         Json?
+  dictionaryId Int?
+  dictionary   Dictionary? @relation(fields: [dictionaryId], references: [id])
+}

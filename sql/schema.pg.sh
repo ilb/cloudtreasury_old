@@ -1,0 +1,1 @@
+cat schema.pg.sql | sudo -u postgres psql
