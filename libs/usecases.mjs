@@ -1,6 +1,6 @@
 import application from './application.mjs';
 import { validateBySchema } from './utils/schemaValidation.mjs';
-import logger from './logger';
+import logger from './logger.mjs';
 
 /**
  * create scope for usecase processing
