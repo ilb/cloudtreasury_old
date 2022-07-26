@@ -4,6 +4,8 @@ export default class CalculateFairPrice {
   }
 
   async process(tickerInfo) {
-    await this.stockValuationService.valuate(tickerInfo);
+    return await this.stockValuationService.valuate(tickerInfo);
   }
+
+  schema() {}
 }
