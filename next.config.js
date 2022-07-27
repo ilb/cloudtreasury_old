@@ -1,4 +1,3 @@
-// const withRpc = require("next-rpc")();
 const withPlugins = require("next-compose-plugins");
 const withTM = require("next-transpile-modules")([
   "@ilb/uniformscomponents"
