@@ -1,4 +1,4 @@
-import { render } from 'libs/utils/carbone.mjs';
+import { render } from '../../../libs/utils/carbone.mjs';
 
 export default class DocumentRenderer {
   constructor() {
