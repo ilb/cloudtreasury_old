@@ -6,8 +6,9 @@ export default class StockValuationService {
   }
 
   valuate(tickerInfo) {
-    const data = spawnSync('python', [`fairpricecalc`], {
+    const data = spawnSync('python3.7', [`fairpricecalc`], {
       argv0: 'PYTHONUTF8=1',
+      env: {'ru.bystrobank.apps.stockvaluation.securitiesrefurl':'https://ilb.github.io/stockvaluation/securities.xhtml'},
       cwd: this.stockValuationPath,
       input: JSON.stringify(tickerInfo),
       encoding: 'utf8'
