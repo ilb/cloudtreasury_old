@@ -2,8 +2,11 @@ import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'unifor
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { withRouter } from 'next/router';
 import { Card } from 'antd';
+import { useState } from 'react';
 
-const calculate = ({}) => {
+const calculate = ({ }) => {
+    const [calculateResult, setCalculateResult] = useState({});
+
     const schema = {
         type: 'object',
         properties: {
@@ -14,7 +17,7 @@ const calculate = ({}) => {
             date: {
                 title: 'Дата оценки',
                 type: 'object',
-                format:  'date'
+                format: 'date'
             },
             receivedDate: {
                 title: 'Дата оценки',
@@ -49,16 +52,18 @@ const calculate = ({}) => {
         required: ['ticker', 'date']
     };
 
-    async function onSubmit({ ticker, date }){
+    async function onSubmit({ ticker, date }) {
         console.log(date)
-        const response = await fetch('/cloudtreasury/api/fairprice/calculations', 
-            {method: 'POST',
+        const response = await fetch('/cloudtreasury/api/fairprice/calculations',
+            {
+                method: 'POST',
                 body: JSON.stringify({ ticker, date: date.toISOString().slice(0, 10) }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
-        });
+            });
         const json = await response.json();
+        setCalculateResult(json);
         console.log('Успех:', JSON.stringify(json));
     };
 
@@ -70,13 +75,13 @@ const calculate = ({}) => {
                 <SubmitField value='Отправить' />
                 <ErrorsField />
                 <br />
-                <AutoField name='receivedDate' readOnly />
-                <AutoField name='active' readOnly />
-                <AutoField name='fairPrice' readOnly />
-                <AutoField name='countDays' readOnly />
-                <AutoField name='countDeals' readOnly />
-                <AutoField name='initialVolume' readOnly />
-                <AutoField name='tradingVolume' readOnly />
+                <AutoField name='receivedDate' readOnly value={calculateResult.date} />
+                <AutoField name='active' readOnly value={calculateResult.active} />
+                <AutoField name='fairPrice' readOnly value={calculateResult.fairPrice} />
+                <AutoField name='countDays' readOnly value={calculateResult.countDays} />
+                <AutoField name='countDeals' readOnly value={calculateResult.countDeals} />
+                <AutoField name='initialVolume' readOnly value={calculateResult.initialVolume} />
+                <AutoField name='tradingVolume' readOnly value={calculateResult.tradingVolume} />
             </AutoForm>
         </Card>
     );
