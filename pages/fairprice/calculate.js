@@ -53,7 +53,6 @@ const calculate = ({ }) => {
     };
 
     async function onSubmit({ ticker, date }) {
-        console.log(date)
         const response = await fetch('/cloudtreasury/api/fairprice/calculations',
             {
                 method: 'POST',
@@ -64,7 +63,6 @@ const calculate = ({ }) => {
             });
         const json = await response.json();
         setCalculateResult(json);
-        console.log('Успех:', JSON.stringify(json));
     };
 
     return (
