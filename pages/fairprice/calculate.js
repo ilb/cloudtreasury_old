@@ -3,6 +3,7 @@ import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { withRouter } from 'next/router';
 import { Card } from 'antd';
 import { useState } from 'react';
+import Grid from 'antd/lib/card/Grid';
 
 const calculate = ({ }) => {
     const [calculateResult, setCalculateResult] = useState({});
@@ -67,7 +68,9 @@ const calculate = ({ }) => {
 
     return (
         <Card centered padded>
+            <Grid>
             <AutoForm schema={createSchemaBridge(schema)} onSubmit={onSubmit}>
+                <h1>Расчет справедливой стоимости</h1>
                 <AutoField name='ticker' />
                 <DateField name='date' format='YYYY-MM-DD' showTime={false} />
                 <SubmitField value='Отправить' />
@@ -81,6 +84,7 @@ const calculate = ({ }) => {
                 <AutoField name='initialVolume' readOnly value={calculateResult.initialVolume} />
                 <AutoField name='tradingVolume' readOnly value={calculateResult.tradingVolume} />
             </AutoForm>
+            </Grid>
         </Card>
     );
 };
