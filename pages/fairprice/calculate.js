@@ -66,7 +66,7 @@ const calculate = ({}) => {
         <Card centered padded>
             <AutoForm schema={createSchemaBridge(schema)} onSubmit={onSubmit}>
                 <AutoField name='ticker' />
-                <DateField name='date' />
+                <DateField name='date' format='YYYY-MM-DD' showTime={false} />
                 <SubmitField value='Отправить' />
                 <ErrorsField />
                 <br />
