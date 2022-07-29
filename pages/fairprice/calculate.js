@@ -1,7 +1,7 @@
-import { AutoForm, AutoField, SubmitField } from 'uniforms-antd';
+import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { withRouter } from 'next/router';
-import { Card, DatePicker } from 'antd';
+import { Card } from 'antd';
 
 const calculate = ({}) => {
     const schema = {
@@ -10,11 +10,10 @@ const calculate = ({}) => {
             ticker: {
                 title: 'Тикер ценной бумаги',
                 type: 'string',
-                normalizeSpace: true
             },
             date: {
                 title: 'Дата оценки',
-                type: 'string',
+                type: 'object',
                 format:  'date'
             },
             receivedDate: {
@@ -50,11 +49,11 @@ const calculate = ({}) => {
         required: ['ticker', 'date']
     };
 
-    async function onSubmit(data){
-        console.log(data)
-        const response = await fetch('/api/fairprice/calculations', 
+    async function onSubmit({ ticker, date }){
+        console.log(date)
+        const response = await fetch('/cloudtreasury/api/fairprice/calculations', 
             {method: 'POST',
-                body: JSON.stringify(data), 
+                body: JSON.stringify({ ticker, date: date.toISOString().slice(0, 10) }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -65,10 +64,11 @@ const calculate = ({}) => {
 
     return (
         <Card centered padded>
-            <AutoForm schema={createSchemaBridge(schema)} submitField={SubmitField} onSubmit={onSubmit}>
+            <AutoForm schema={createSchemaBridge(schema)} onSubmit={onSubmit}>
                 <AutoField name='ticker' />
-                <DatePicker name='date' />
+                <DateField name='date' />
                 <SubmitField value='Отправить' />
+                <ErrorsField />
                 <br />
                 <AutoField name='receivedDate' readOnly />
                 <AutoField name='active' readOnly />
