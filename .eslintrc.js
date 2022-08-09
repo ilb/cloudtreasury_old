@@ -27,7 +27,7 @@ module.exports = {
     'plugin:jest/recommended'
   ],
   rules: {
-    'prettier/prettier': ['error', { endOfLine: "off" }, { usePrettierrc: true }],
+    'prettier/prettier': ['error', { endOfLine: 'lf' }, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'jsx-a11y/anchor-is-valid': [
