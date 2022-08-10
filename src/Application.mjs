@@ -17,6 +17,7 @@ export default class Application {
     // register currentUser, datasource, prisma
     this.container.register({
       stockValuationPath: asValue(process.env['apps.stockvaluation.ws']),
+      pythonPath: asValue(process.env['apps.cloudtreasury.pythonpath']),
       userCode: asValue(process.env.USER),
       currentUser: asValue(process.env.USER),
       prisma: asValue(prisma),

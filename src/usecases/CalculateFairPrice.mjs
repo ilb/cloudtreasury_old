@@ -1,10 +1,13 @@
 export default class CalculateFairPrice {
-  constructor({ stockValuationService }) {
+  constructor({ stockValuationService, stockValuationRepository }) {
     this.stockValuationService = stockValuationService;
+    this.stockValuationRepository = stockValuationRepository;
   }
 
   async process(tickerInfo) {
-    return await this.stockValuationService.valuate(tickerInfo);
+    const valuation = await this.stockValuationService.valuate(tickerInfo);
+    await this.stockValuationRepository.save({ ...tickerInfo, data: valuation });
+    return valuation;
   }
 
   schema() {}
