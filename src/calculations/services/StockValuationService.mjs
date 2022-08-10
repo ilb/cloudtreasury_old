@@ -1,14 +1,18 @@
 import { spawnSync } from 'child_process';
 
 export default class StockValuationService {
-  constructor({stockValuationPath}) {
+  constructor({ stockValuationPath, pythonPath }) {
     this.stockValuationPath = stockValuationPath;
+    this.pythonPath = pythonPath;
   }
 
   valuate(tickerInfo) {
-    const data = spawnSync('python3.7', [`fairpricecalc`], {
+    const data = spawnSync(this.pythonPath, [`fairpricecalc`], {
       argv0: 'PYTHONUTF8=1',
-      env: {'ru.bystrobank.apps.stockvaluation.securitiesrefurl':'https://ilb.github.io/stockvaluation/securities.xhtml'},
+      env: {
+        'ru.bystrobank.apps.stockvaluation.securitiesrefurl':
+          'https://ilb.github.io/stockvaluation/securities.xhtml'
+      },
       cwd: this.stockValuationPath,
       input: JSON.stringify(tickerInfo),
       encoding: 'utf8'
@@ -17,7 +21,7 @@ export default class StockValuationService {
     if (!data.status) {
       return JSON.parse(data.stdout);
     } else {
-      throw data.stderr;
+      throw new Error(data.stderr);
     }
   }
 }

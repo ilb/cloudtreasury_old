@@ -1,10 +1,13 @@
 import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
-import { withRouter } from 'next/router';
-import { Card, Col, Input, Layout, Menu, Row, Skeleton, Spin } from 'antd';
+import { useRouter, withRouter } from 'next/router';
+import { Card, Col, Input, Layout, Menu, message, Row, Skeleton, Spin } from 'antd';
 import { useState } from 'react';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import Link from 'next/link';
 
 const calculate = ({}) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [calculateResult, setCalculateResult] = useState({});
 
@@ -69,8 +72,17 @@ const calculate = ({}) => {
         'Content-Type': 'application/json'
       }
     });
-    const json = await response.json();
+
     setLoading(false);
+
+    if (!response.ok) {
+      message.error(
+        'Что-то пошло не так. Проверьте введенный тикер, возможно по нему отсутствуют данные'
+      );
+      return;
+    }
+
+    const json = await response.json();
     setCalculateResult({ ...json, active: json.active === true ? 'Да' : 'Нет' });
   }
 
@@ -78,12 +90,18 @@ const calculate = ({}) => {
     <>
       <Layout>
         <Layout.Header style={{ background: '#fff' }}>
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={['1']}
-            items={[{ label: 'Расчёт справедливой стоимости', key: '1' }]}
-          />
+          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['stockValuation']}>
+            <Menu.Item key="stockValuation" onClick={() => router.push('/fairprice/calculate')}>
+              Расчёт справедливой стоимости
+            </Menu.Item>
+            <SubMenu key="exports" title="Отчёты">
+              <Menu.Item key="stockValuationExport">
+                <Link href="/api/fairprice/export" passHref>
+                  Определение стоимости ценных бумаг
+                </Link>
+              </Menu.Item>
+            </SubMenu>
+          </Menu>
         </Layout.Header>
         <Layout>
           <Layout.Content>
@@ -96,7 +114,12 @@ const calculate = ({}) => {
                 <Card title="Тикер">
                   <AutoForm schema={createSchemaBridge(schema)} onSubmit={onSubmit}>
                     <AutoField name="ticker" />
-                    <DateField name="date" format="YYYY-MM-DD" showTime={false} />
+                    <DateField
+                      name="date"
+                      format="YYYY-MM-DD"
+                      showTime={false}
+                      value={new Date()}
+                    />
                     <SubmitField value="Отправить" />
                     <ErrorsField />
                   </AutoForm>

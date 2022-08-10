@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS dictionaries;
-create database dictionaries;
-CREATE USER dictionaries WITH PASSWORD 'dictionaries';
-GRANT ALL PRIVILEGES ON DATABASE dictionaries to dictionaries;
-ALTER USER dictionaries CREATEDB;
+DROP DATABASE IF EXISTS cloudtreasury;
+create database cloudtreasury;
+CREATE USER cloudtreasury WITH PASSWORD 'cloudtreasury';
+GRANT ALL PRIVILEGES ON DATABASE cloudtreasury to cloudtreasury;
+ALTER USER cloudtreasury CREATEDB;
