@@ -12,6 +12,7 @@
     "prisma:push": "npx prisma db push",
     "prisma:generate": "npx prisma generate",
     "ilb-build": "npm run migrate:deploy && npm run prisma:generate && next build",
+    "ilb-deploy": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
