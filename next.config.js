@@ -1,5 +1,5 @@
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['ajv', '@ilb/uniformscomponents', 'uniforms']);
+const withTM = require('next-transpile-modules')(['ajv', '@ilb/uniformscomponents', 'uniforms', 'date-fns']);
 
 const basePath = process.env.BASEPATH || '/cloudtreasury';
 module.exports = withPlugins([withTM], {
