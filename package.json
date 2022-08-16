@@ -13,6 +13,8 @@
     "prisma:generate": "npx prisma generate",
     "ilb-build": "npm run migrate:deploy && npm run prisma:generate && next build",
     "ilb-deploy": "",
+    "check:es:build": "npx es-check es5 './.next/static/**/*.js' -v",
+    "escheck": "npm run build && npm run check:es:build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
