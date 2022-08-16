@@ -19,7 +19,7 @@ export default class DocumentRenderer {
     this.defautFormat = 'odt';
     this.defautTemplateFormat = 'odt';
     this.templateBase = process.env['apps.cloudtreasurytemplates.ws'];
-    this.renderPath = path.join(os.tmpdir() + 'carbone_render' + process.env.USER);
+    this.renderPath = path.join(os.tmpdir(), `carbone_render_${process.env.USER}`);
   }
 
   async render(templateCode, data, renderOptions = {}) {
