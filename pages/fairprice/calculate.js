@@ -21,7 +21,8 @@ const calculate = ({}) => {
       date: {
         title: 'Дата оценки',
         type: 'object',
-        format: 'date'
+        format: 'date',
+        default: new Date()
       }
     },
 
@@ -112,10 +113,7 @@ const calculate = ({}) => {
               style={{ minHeight: '100vh', padding: '15px 0px 0px 0px' }}>
               <Col span={8}>
                 <Card title="Тикер">
-                  <AutoForm
-                    schema={createSchemaBridge(schema)}
-                    onSubmit={onSubmit}
-                    model={{ date: new Date() }}>
+                  <AutoForm schema={createSchemaBridge(schema)} onSubmit={onSubmit}>
                     <AutoField name="ticker" />
                     <DateField name="date" format="YYYY-MM-DD" showTime={false} />
                     <SubmitField value="Отправить" />
