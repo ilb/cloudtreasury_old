@@ -1,4 +1,6 @@
-import { render } from 'libs/utils/carbone.mjs';
+import { render } from '../../../libs/utils/carbone.mjs';
+import path from 'path';
+import os from 'os';
 
 export default class DocumentRenderer {
   constructor() {
@@ -12,12 +14,12 @@ export default class DocumentRenderer {
     this.mimeTypes = mimeTypes;
     this.defaultOptions = {
       lang: 'ru',
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      renderPath: path.join(os.tmpdir(), `carbone_render_${process.env.USER}`)
     };
     this.defautFormat = 'odt';
     this.defautTemplateFormat = 'odt';
     this.templateBase = process.env['apps.cloudtreasurytemplates.ws'];
-    this.renderPath = 'carbone_render' + process.env.USER;
   }
 
   async render(templateCode, data, renderOptions = {}) {

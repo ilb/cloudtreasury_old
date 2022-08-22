@@ -1,8 +1,8 @@
 import awilix from 'awilix';
 const { asValue, asClass } = awilix;
-import prisma from 'libs/prisma';
-import nodeCache from 'libs/nodeCache';
-import container from 'src/container';
+import prisma from '../libs/prisma.mjs';
+import nodeCache from '../libs/nodeCache.mjs';
+import container from './container.mjs';
 
 export default class Application {
   constructor() {
@@ -16,6 +16,8 @@ export default class Application {
 
     // register currentUser, datasource, prisma
     this.container.register({
+      stockValuationPath: asValue(process.env['apps.stockvaluation.ws']),
+      pythonPath: asValue(process.env['apps.cloudtreasury.pythonpath']),
       userCode: asValue(process.env.USER),
       currentUser: asValue(process.env.USER),
       prisma: asValue(prisma),

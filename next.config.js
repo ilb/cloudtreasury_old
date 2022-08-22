@@ -1,13 +1,25 @@
-// const withRpc = require("next-rpc")();
-// const withPlugins = require("next-compose-plugins");
-// const withTM = require("next-transpile-modules")([
-//   "@ilb/node_context",
-//   "@ilb/node_ldap",
-// ]);
-const basePath = "/dictionaries";
-const config = {
+const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')([
+  'ajv',
+  '@ilb/uniformscomponents',
+  'uniforms',
+  'date-fns',
+  'antd',
+  'uniforms-antd'
+]);
+
+const basePath = process.env.BASEPATH || '/cloudtreasury';
+module.exports = withPlugins([withTM], {
   basePath,
-  assetPrefix: basePath
-};
-module.exports = config;
-// module.exports = withPlugins([withRpc], config);
+  assetPrefix: basePath,
+  trailingSlash: false,
+  env: {
+    API_PATH: basePath + '/api',
+    BASE_URL: process.env.BASE_URL
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true
+  }
+});
