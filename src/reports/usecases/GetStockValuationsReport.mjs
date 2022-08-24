@@ -4,12 +4,12 @@ export default class GetStockValuationsReport {
     this.documentRenderer = documentRenderer;
   }
 
-  async process() {
-    const today = new Date().toISOString().slice(0, 10);
-    const stockValuations = await this.stockValuationRepository.findAllByDate(today);
+  async process(currentDate) {
+    // const today = new Date().toISOString().slice(0, 10);
+    const stockValuations = await this.stockValuationRepository.findAllByDate(currentDate);
 
     const renderOptions = {
-      attachmentName: `${today}`,
+      attachmentName: `${currentDate}`,
       format: 'xlsx',
       formatTemp: 'ods'
     };
