@@ -1,9 +1,8 @@
 import { AutoForm, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { useRouter, withRouter } from 'next/router';
-import { Card, Layout, Menu } from 'antd';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import Link from 'next/link';
+import { Card, Layout } from 'antd';
+import header from './header/header';
 
 const sendOut = ({}) => {
   const router = useRouter();
@@ -24,20 +23,7 @@ const sendOut = ({}) => {
   return (
     <>
       <Layout>
-        <Layout.Header style={{ background: '#fff' }}>
-          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['stockValuation']}>
-            <Menu.Item key="stockValuation" onClick={() => router.push('/fairprice/calculate')}>
-              Расчёт справедливой стоимости
-            </Menu.Item>
-            <SubMenu key="exports" title="Отчёты">
-              <Menu.Item key="stockValuationExport">
-                <Link href="/api/fairprice/export" passHref>
-                  Определение стоимости ценных бумаг
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
-        </Layout.Header>
+        {header()}
         <Layout>
           <Layout.Content>
             <Card title="Генерация отчета">

@@ -1,13 +1,10 @@
 import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
-import { useRouter, withRouter } from 'next/router';
 import { Card, Col, Input, Layout, Menu, message, Row, Skeleton, Spin } from 'antd';
 import { useState } from 'react';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import Link from 'next/link';
+import header from './header/header';
 
 const calculate = ({}) => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [calculateResult, setCalculateResult] = useState({});
 
@@ -90,20 +87,7 @@ const calculate = ({}) => {
   return (
     <>
       <Layout>
-        <Layout.Header style={{ background: '#fff' }}>
-          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['stockValuation']}>
-            <Menu.Item key="stockValuation" onClick={() => router.push('/fairprice/calculate')}>
-              Расчёт справедливой стоимости
-            </Menu.Item>
-            <SubMenu key="exports" title="Отчёты">
-              <Menu.Item key="stockValuationExport">
-                <Link href="/api/fairprice/export" passHref>
-                  Определение стоимости ценных бумаг
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
-        </Layout.Header>
+        {header()}
         <Layout>
           <Layout.Content>
             <Row
@@ -152,4 +136,4 @@ const calculate = ({}) => {
   );
 };
 
-export default withRouter(calculate);
+export default calculate;
