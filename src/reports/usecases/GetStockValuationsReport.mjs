@@ -5,11 +5,11 @@ export default class GetStockValuationsReport {
   }
 
   async process(currentDate) {
-    // const today = new Date().toISOString().slice(0, 10);
-    const stockValuations = await this.stockValuationRepository.findAllByDate(currentDate);
+    const adaptedDate = new Date(currentDate).toISOString().slice(0, 10);
+    const stockValuations = await this.stockValuationRepository.findAllByDate(adaptedDate);
 
     const renderOptions = {
-      attachmentName: `${currentDate}`,
+      attachmentName: `${adaptedDate}`,
       format: 'xlsx',
       formatTemp: 'ods'
     };
