@@ -1,10 +1,10 @@
 import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
-import { Card, Col, Input, Layout, Menu, message, Row, Skeleton, Spin } from 'antd';
+import { Card, Col, Layout, message, Row, Spin } from 'antd';
 import { useState } from 'react';
-import header from './header/header';
+import Header from '../../src/components/Header';
 
-const calculate = ({}) => {
+const calculate = () => {
   const [loading, setLoading] = useState(false);
   const [calculateResult, setCalculateResult] = useState({});
 
@@ -87,7 +87,7 @@ const calculate = ({}) => {
   return (
     <>
       <Layout>
-        {header()}
+        <Header />
         <Layout>
           <Layout.Content>
             <Row

@@ -4,7 +4,7 @@ import { Layout, Menu } from 'antd';
 import { useRouter, withRouter } from 'next/router';
 import { useState } from 'react';
 
-const header = ({}) => {
+const Header = () => {
   const router = useRouter();
   const [menuItem, setMenuItem] = useState(false);
 
@@ -35,4 +35,4 @@ const header = ({}) => {
   );
 };
 
-export default withRouter(header);
+export default withRouter(Header);
