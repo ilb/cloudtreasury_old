@@ -2,7 +2,7 @@ import { AutoForm, AutoField, SubmitField, ErrorsField, DateField } from 'unifor
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { Card, Col, Layout, message, Row, Spin } from 'antd';
 import { useState } from 'react';
-import Header from '../../src/components/Header';
+import Header from '../../components/Header';
 
 const calculate = () => {
   const [loading, setLoading] = useState(false);

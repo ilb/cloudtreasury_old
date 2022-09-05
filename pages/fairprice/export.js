@@ -2,7 +2,7 @@ import { AutoForm, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { useRouter, withRouter } from 'next/router';
 import { Card, Layout } from 'antd';
-import Header from '../../src/components/Header';
+import Header from '../../components/Header';
 
 const sendOut = () => {
   const router = useRouter();
