@@ -25,7 +25,7 @@ const Header = () => {
             key="stockValuationExport"
             onClick={() => setMenuItem('stockValuationExport')}
             selected={menuItem === 'stockValuationExport'}>
-            <Link href="/api/fairprice/export" passHref>
+            <Link href="/fairprice/export" passHref>
               Определение стоимости ценных бумаг
             </Link>
           </Menu.Item>

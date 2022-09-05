@@ -4,7 +4,7 @@ export default class GetStockValuationsReport {
     this.documentRenderer = documentRenderer;
   }
 
-  async process(currentDate) {
+  async process({ currentDate }) {
     const adaptedDate = new Date(currentDate).toISOString().slice(0, 10);
     const stockValuations = await this.stockValuationRepository.findAllByDate(adaptedDate);
 

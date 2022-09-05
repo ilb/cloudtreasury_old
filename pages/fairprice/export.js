@@ -10,7 +10,7 @@ const sendOut = () => {
   const schema = {
     type: 'object',
     properties: {
-      date: {
+      currentDate: {
         title: 'Дата генерации',
         type: 'object',
         format: 'date',
@@ -30,7 +30,7 @@ const sendOut = () => {
               <AutoForm
                 schema={createSchemaBridge(schema)}
                 onSubmit={({ currentDate }) => {
-                  router.push(`/fairprice/export?date=${currentDate}`);
+                  router.push(`/api/fairprice/export?date=${currentDate.toISOString()}`);
                 }}>
                 <DateField name="currentDate" format="YYYY-MM-DD" showTime={false} />
                 <SubmitField value="Скачать" />
