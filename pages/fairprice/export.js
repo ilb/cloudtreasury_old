@@ -1,7 +1,7 @@
 import { AutoForm, SubmitField, ErrorsField, DateField } from 'uniforms-antd';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { useRouter, withRouter } from 'next/router';
-import { Card, Layout } from 'antd';
+import { Card, Col, Layout, Row } from 'antd';
 import Header from '../../components/Header';
 
 const sendOut = () => {
@@ -23,22 +23,32 @@ const sendOut = () => {
   return (
     <>
       <Layout>
-        <Header />
+        <Header selectedMenuItem="exports" />
         <Layout>
           <Layout.Content>
-            <Card title="Генерация отчета">
-              <AutoForm
-                schema={createSchemaBridge(schema)}
-                onSubmit={({ currentDate }) => {
-                  router.push(
-                    `/api/fairprice/export?currentDate=${currentDate.toISOString().slice(0, 10)}`
-                  );
-                }}>
-                <DateField name="currentDate" format="YYYY-MM-DD" showTime={false} />
-                <SubmitField value="Скачать" />
-                <ErrorsField />
-              </AutoForm>
-            </Card>
+            <Row
+              gutter={16}
+              type="flex"
+              justify="center"
+              style={{ minHeight: '100vh', padding: '15px 0px 0px 0px' }}>
+              <Col span={8}>
+                <Card title="Генерация отчета">
+                  <AutoForm
+                    schema={createSchemaBridge(schema)}
+                    onSubmit={({ currentDate }) => {
+                      router.push(
+                        `/api/fairprice/export?currentDate=${currentDate
+                          .toISOString()
+                          .slice(0, 10)}`
+                      );
+                    }}>
+                    <DateField name="currentDate" format="YYYY-MM-DD" showTime={false} />
+                    <SubmitField value="Скачать" />
+                    <ErrorsField />
+                  </AutoForm>
+                </Card>
+              </Col>
+            </Row>
           </Layout.Content>
         </Layout>
       </Layout>

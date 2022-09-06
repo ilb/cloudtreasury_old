@@ -4,27 +4,23 @@ import { Layout, Menu } from 'antd';
 import { useRouter, withRouter } from 'next/router';
 import { useState } from 'react';
 
-const Header = () => {
+const Header = ({ selectedMenuItem }) => {
   const router = useRouter();
-  const [menuItem, setMenuItem] = useState(false);
+  const [menuItem, setMenuItem] = useState(selectedMenuItem);
 
   return (
     <Layout.Header style={{ background: '#fff' }}>
-      <Menu theme="light" mode="horizontal" defaultSelectedKeys={['stockValuation']}>
+      <Menu theme="light" mode="horizontal" defaultSelectedKeys={[menuItem]}>
         <Menu.Item
           key="stockValuation"
           onClick={() => {
             router.push('/fairprice/calculate');
             setMenuItem('stockValuation');
-          }}
-          selected={menuItem === 'stockValuation'}>
+          }}>
           Расчёт справедливой стоимости
         </Menu.Item>
         <SubMenu key="exports" title="Отчёты">
-          <Menu.Item
-            key="stockValuationExport"
-            onClick={() => setMenuItem('stockValuationExport')}
-            selected={menuItem === 'stockValuationExport'}>
+          <Menu.Item key="stockValuationExport" onClick={() => setMenuItem('stockValuationExport')}>
             <Link href="/fairprice/export" passHref>
               Определение стоимости ценных бумаг
             </Link>

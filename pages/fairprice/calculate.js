@@ -87,7 +87,7 @@ const calculate = () => {
   return (
     <>
       <Layout>
-        <Header />
+        <Header selectedMenuItem="stockValuation" />
         <Layout>
           <Layout.Content>
             <Row
