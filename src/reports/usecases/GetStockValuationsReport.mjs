@@ -13,9 +13,13 @@ export default class GetStockValuationsReport {
       formatTemp: 'ods'
     };
 
+    const data = {};
+    data.currentDate = currentDate;
+    data.stockValuations = stockValuations.map(({ ticker, date, data }) => ({ ticker, date, ...data }));
+
     return await this.documentRenderer.render(
       'tickers',
-      stockValuations.map(({ ticker, date, data }) => ({ ticker, date, ...data })),
+      data,
       renderOptions
     );
   }
