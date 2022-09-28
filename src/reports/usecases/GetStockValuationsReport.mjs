@@ -15,7 +15,13 @@ export default class GetStockValuationsReport {
 
     const data = {};
     data.currentDate = currentDate;
-    data.stockValuations = stockValuations.map(({ ticker, date, data }) => ({ ticker, date, ...data }));
+    data.stockValuations = stockValuations.map(({ ticker, date, data }) => ({ 
+      ticker, 
+      date, 
+      ...data, 
+      active: data.active ? "ДА" : "НЕТ", 
+      fairPrice: data.fairPrice.toString().replace(".", ",") 
+    }));
 
     return await this.documentRenderer.render(
       'tickers',
