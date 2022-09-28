@@ -15,7 +15,12 @@ export default class GetStockValuationsReport {
 
     return await this.documentRenderer.render(
       'tickers',
-      stockValuations.map(({ ticker, date, data }) => ({ ticker, date, ...data, active: data.active ? "ДА" : "НЕТ" })),
+      stockValuations.map(({ ticker, date, data }) => ({
+         ticker, 
+         date, 
+         ...data, 
+         active: data.active ? "ДА" : "НЕТ",
+         fairPrice: data.fairPrice.toString().replace(".", ",")})),
       renderOptions
     );
   }
