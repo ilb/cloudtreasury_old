@@ -19,7 +19,8 @@ export default class GetStockValuationsReport {
       ticker, 
       date, 
       ...data, 
-      active: data.active ? "ДА" : "НЕТ", 
+      active: data.active === 'ACTIVE' ? "ДА" : "НЕТ",
+      adjustment: data.active === 'LOW_ACTIVE' ? "ДА" : "",
       fairPrice: data.fairPrice.toString().replace(".", ",") 
     }));
 

@@ -81,7 +81,7 @@ const calculate = () => {
     }
 
     const json = await response.json();
-    setCalculateResult({ ...json, active: json.active === true ? 'Да' : 'Нет' });
+    setCalculateResult({ ...json, active: json.active === 'ACTIVE' ? 'Да' : 'Нет' });
   }
 
   return (
