@@ -1,13 +1,13 @@
 import { Button, Card, Col, Layout, message, Modal, Row, Space } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { createSchemaBridge } from '@ilb/uniformscomponents';
 import { AutoField, AutoForm, SubmitField } from 'uniforms-antd';
 import MySearchSelect from '../components/MySearchSelect';
+import { useRouter } from 'next/router';
 // import awilix from 'awilix';
 
-const admin = () => {
-  const [stocksList, setStocksList] = useState([]);
-  const [loading, setLoading] = useState(false);
+const admin = (props) => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTicker, setShowTicker] = useState(false);
   const [value, setValue] = useState('');
@@ -39,7 +39,6 @@ const admin = () => {
   };
 
   const fetchUrl = async (url, method = 'GET', body = {}) => {
-    setLoading(true);
     let options = {};
     if (method == 'POST') {
       options = {
@@ -51,35 +50,24 @@ const admin = () => {
       };
     }
     const resp = await fetch(url, options);
-    setLoading(false);
     return resp.json();
   };
 
   const findStockById = (id) => {
-    return stocksList.find((el) => el.stock_id == id);
+    return props.stockList.find((el) => el.stock_id == id);
   };
 
   const optionsGenerate = () => {
-    if (stocksList.length) {
-      const options = stocksList.map((stock) => {
+    if (props.stockList.length) {
+      return props.stockList.map((stock) => {
         return {
           label: stock.ticker,
           value: stock.stock_id
         };
       });
-      return options;
     }
   };
-
-  const fetch_and_write_stocks = () => {
-    fetchUrl('/cloudtreasury/api/admin/getStocks').then((result) => setStocksList(result.data));
-  };
-
-  useEffect(() => {
-    fetch_and_write_stocks();
-  }, []);
-
-  const options = useMemo(() => optionsGenerate(), [stocksList]);
+  const options = useMemo(() => optionsGenerate(), [props.stockList]);
 
   const InputHandler = (value) => {
     setShowTicker(false);
@@ -96,16 +84,16 @@ const admin = () => {
           'POST',
           formData
         );
-        await fetch_and_write_stocks();
         message.info(result.message);
+        router.replace(router.asPath);
       } catch (e) {
         message.error(e.message);
       }
     } else {
       try {
         const result = await fetchUrl('/cloudtreasury/api/admin/createStock', 'POST', formData);
-        await fetch_and_write_stocks();
         message.info(result.message);
+        router.replace(router.asPath);
       } catch (e) {
         message.error(e.message);
       }
@@ -126,8 +114,8 @@ const admin = () => {
       const result = await fetchUrl(
         `/cloudtreasury/api/admin/deleteStock/${currentStock.stock_id}`
       );
-      await fetch_and_write_stocks();
       message.info(result.message);
+      router.replace(router.asPath);
     } catch (e) {
       message.error(e.message);
     }
@@ -162,7 +150,7 @@ const admin = () => {
           justify="center"
           style={{ minHeight: '100vh', padding: '15px 0px 0px 0px' }}>
           <Col span={8}>
-            <Card title="Выбор Stock`a">
+            <Card title="Выбор ценной бумаги">
               <MySearchSelect
                 placeholder="Выберите stock"
                 value={value}
@@ -181,7 +169,7 @@ const admin = () => {
           </Col>
 
           <Col span={8}>
-            <Card title="Данные по Stock">
+            <Card title="Данные ценной бумаги">
               <AutoForm schema={createSchemaBridge(resultSchema)} onSubmit={sendForm}>
                 {showTicker && (
                   <AutoField
@@ -209,5 +197,12 @@ const admin = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  const res = await fetch('http://localhost:3000/cloudtreasury/api/admin/getStocks');
+  const data = await res.json();
+
+  return { props: { stockList: data.data } };
+}
 
 export default admin;
